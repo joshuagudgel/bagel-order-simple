@@ -45,12 +45,12 @@ form input[type="submit"]:hover {
     background: #4cae4c;
 }
 
-.orders-list {
+.order-list {
     list-style: none;
     padding: 0;
 }
 
-.orders-list li {
+.order-list li {
     background: #fff;
     margin: 10px 0;
     padding: 15px;
