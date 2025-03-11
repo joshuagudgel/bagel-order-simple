@@ -4,26 +4,35 @@ const OrderForm = () => {
     const [customerName, setCustomerName] = useState('');
     const [orderDetails, setOrderDetails] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if(validateInputs(customerName, orderDetails)) {
-            const order = {
-                name: customerName,
-                details: orderDetails,
-                date: new Date().toLocaleDateString()
-            };
+        const order = {
+            customerName,
+            orderDetails,
+            timestamp: new Date().toLocaleDateString()
+        };
 
-            saveOrderToLocalStorage(order);
+        console.log(order);
+
+        try {
+            const response = await fetch('http://localhost:5000/api/orders', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(order),
+            });
             
+            if(!response.ok){
+                throw new Error('Failed to submit order');
+            }
+
             setCustomerName('');
             setOrderDetails('');
-
-            // clear order form once submitted
-
             alert('Order submitted successfully!');
-        } else {
-            alert('Please fill in all fields.');
+        } catch(error){
+            alert("Error submitting order");
         }
     };
 
@@ -31,21 +40,24 @@ const OrderForm = () => {
         return name.trim() !== '' && details.trim() !== '';
     };
 
-    const saveOrderToLocalStorage = (order) => {
-        const orders = JSON.parse(localStorage.getItem('orders')) || [];
-        orders.push(order);
-        localStorage.setItem('orders', JSON.stringify(orders));
-    };
-
     return (
         <form onSubmit={handleSubmit}>
             <div>
                 <label>Name</label>
-                <input type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)}/>
+                <input 
+                    id="customerName"
+                    type="text" 
+                    value={customerName} 
+                    onChange={(e) => setCustomerName(e.target.value)}
+                />
             </div>
             <div>
                 <label>Order Details</label>
-                <textarea value={orderDetails} onChange={(e) => setOrderDetails(e.target.value)}/>
+                <textarea 
+                    id="orderDetails"
+                    value={orderDetails} 
+                    onChange={(e) => setOrderDetails(e.target.value)}
+                />
             </div>
 
             <button type="submit">Submit Order</button>

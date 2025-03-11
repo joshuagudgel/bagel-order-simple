@@ -4,21 +4,33 @@ const OrderList = () => {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        const storedOrders = JSON.parse(localStorage.getItem('orders')) || [];
-        setOrders(storedOrders);
+        const fetchOrders = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/orders');
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setOrders(data);
+              } catch (error) {
+                console.error('Error fetching orders:', error);
+              }
+        };
+        
+        fetchOrders();
     }, []);
     
     
     return (
         <div>
-            <h1>Order List</h1>
+            <h1>Submitted Orders</h1>
             <ul>
                 { orders.length === 0  ? (
                     <p>No orders found.</p>
                 ) : (
                     orders.map((order, index) => (
                         <li key={index}>
-                            Order {index + 1}: {order.name} - {order.details} - {order.date}
+                            Order {index + 1}: {order.customerName} - {order.orderDetails} - {order.timestamp}
                         </li>
                     ))
                 )}
