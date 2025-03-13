@@ -1,6 +1,6 @@
 import Order from '../models/Order.js';
 
-exports.createOrder = async (req, res) => {
+export const createOrder = async (req, res) => {
   console.log("API createOrder");
   try {
     const newOrder = new Order(req.body);
@@ -11,7 +11,7 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.getOrders = async (req, res) => {
+export const getOrders = async (req, res) => {
   console.log("API getOrders");
   try {
     const orders = await Order.find();
