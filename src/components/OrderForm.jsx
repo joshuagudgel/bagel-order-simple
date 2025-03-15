@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 const OrderForm = () => {
     const [customerName, setCustomerName] = useState('');
     const [orderDetails, setOrderDetails] = useState('');
+    const [eggs, setEggs] = useState('');
+    const [cheese, setCheese] = useState('');
+    const [bagel, setBagel] = useState('');
+    const [spread, setSpread] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -10,7 +14,11 @@ const OrderForm = () => {
         const order = {
             customerName,
             orderDetails,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            eggs,
+            cheese,
+            bagel,
+            spread
         };
 
         console.log(order);
@@ -30,6 +38,10 @@ const OrderForm = () => {
 
             setCustomerName('');
             setOrderDetails('');
+            setEggs('');
+            setCheese('');
+            setBagel('');
+            setSpread('');
             alert('Order submitted successfully!');
         } catch(error){
             alert("Error submitting order");
@@ -59,7 +71,38 @@ const OrderForm = () => {
                     onChange={(e) => setOrderDetails(e.target.value)}
                 />
             </div>
-
+            <div>
+                <label>Eggs</label>
+                <textarea 
+                    id="eggs"
+                    value={eggs} 
+                    onChange={(e) => setEggs(e.target.value)}
+                />
+            </div>
+            <div>
+                <label>Cheese</label>
+                <textarea 
+                    id="cheese"
+                    value={cheese} 
+                    onChange={(e) => setCheese(e.target.value)}
+                />
+            </div>
+            <div>
+                <label>Bagel</label>
+                <textarea 
+                    id="bagel"
+                    value={bagel} 
+                    onChange={(e) => setBagel(e.target.value)}
+                />
+            </div>
+            <div>
+                <label>Spread</label>
+                <textarea 
+                    id="spread"
+                    value={spread} 
+                    onChange={(e) => setSpread(e.target.value)}
+                />
+            </div>
             <button type="submit">Submit Order</button>
         </form>
     );
