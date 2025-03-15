@@ -10,7 +10,7 @@ const OrderForm = () => {
         const order = {
             customerName,
             orderDetails,
-            timestamp: new Date().toLocaleDateString()
+            timestamp: new Date().toISOString()
         };
 
         console.log(order);
