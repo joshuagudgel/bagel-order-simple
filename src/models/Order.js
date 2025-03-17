@@ -7,6 +7,7 @@ const orderSchema = new mongoose.Schema({
   cheese: { type: String, required: true },
   bagel: { type: String, required: true },
   spread: { type: String, required: true },
+  orderNotes: { type: String },
 });
 
 const Order = mongoose.model('Order', orderSchema);

@@ -37,6 +37,7 @@ const OrderList = () => {
                             <div>Cheese - {order.cheese}</div>
                             <div>Eggs - {order.eggs}</div>
                             <div>Time - {order.timestamp}</div>
+                            <div>Additional Notes - {order.orderNotes}</div>
                         </li>
                     ))
                 )}

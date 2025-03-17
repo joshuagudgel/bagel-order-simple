@@ -6,6 +6,7 @@ const OrderForm = () => {
     const [cheese, setCheese] = useState('');
     const [bagel, setBagel] = useState('');
     const [spread, setSpread] = useState('');
+    const [orderNotes, setOrderNotes] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -16,7 +17,8 @@ const OrderForm = () => {
             eggs,
             cheese,
             bagel,
-            spread
+            spread,
+            orderNotes
         };
 
         console.log(order);
@@ -39,6 +41,7 @@ const OrderForm = () => {
             setCheese('');
             setBagel('');
             setSpread('');
+            setOrderNotes('');
             alert('Order submitted successfully!');
         } catch(error){
             alert("Error submitting order");
@@ -120,6 +123,15 @@ const OrderForm = () => {
                     <option value="nutella">Nutella</option>
                     <option value="avocado">Avocado</option>
                 </select>
+            </div>
+            <div>
+                <label>Notes</label>
+                <input 
+                    id="orderNotes"
+                    type="text" 
+                    value={orderNotes} 
+                    onChange={(e) => setOrderNotes(e.target.value)}
+                />
             </div>
             <button type="submit">Submit Order</button>
         </form>
