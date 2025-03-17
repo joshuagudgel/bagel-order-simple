@@ -30,7 +30,13 @@ const OrderList = () => {
                 ) : (
                     orders.map((order, index) => (
                         <li key={index}>
-                            Order {index + 1}: {order.customerName} - {order.bagel} - {order.spread} - {order.cheese} - {order.eggs} - {order.orderDetails} - {order.timestamp}
+                            <div>Order {index + 1}:</div> 
+                            <div>Name - {order.customerName}</div>
+                            <div>Bagel - {order.bagel}</div>
+                            <div>Spread - {order.spread}</div>
+                            <div>Cheese - {order.cheese}</div>
+                            <div>Eggs - {order.eggs}</div>
+                            <div>Time - {order.timestamp}</div>
                         </li>
                     ))
                 )}
