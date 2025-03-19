@@ -48,10 +48,6 @@ const OrderForm = () => {
         }
     };
 
-    const validateInputs = (name, details) => {
-        return name.trim() !== '' && details.trim() !== '';
-    };
-
     return (
         <form onSubmit={handleSubmit}>
             <div>
