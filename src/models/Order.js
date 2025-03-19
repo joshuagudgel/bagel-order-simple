@@ -8,6 +8,7 @@ const orderSchema = new mongoose.Schema({
   bagel: { type: String, required: true },
   spread: { type: String, required: true },
   orderNotes: { type: String },
+  isComplete: { type: Boolean, default: false },
 });
 
 const Order = mongoose.model('Order', orderSchema);
