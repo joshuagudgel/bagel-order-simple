@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 const OrderForm = () => {
     const [customerName, setCustomerName] = useState('');
-    const [eggs, setEggs] = useState('');
-    const [cheese, setCheese] = useState('');
-    const [bagel, setBagel] = useState('');
-    const [spread, setSpread] = useState('');
+    const [eggs, setEggs] = useState(0);
+    const [cheese, setCheese] = useState('none');
+    const [bagel, setBagel] = useState('plain');
+    const [spread, setSpread] = useState('none');
     const [orderNotes, setOrderNotes] = useState('');
 
     const handleSubmit = async (event) => {
@@ -37,10 +37,10 @@ const OrderForm = () => {
             }
 
             setCustomerName('');
-            setEggs('');
-            setCheese('');
-            setBagel('');
-            setSpread('');
+            setEggs(0);
+            setCheese('none');
+            setBagel('plain');
+            setSpread('none');
             setOrderNotes('');
             alert('Order submitted successfully!');
         } catch(error){
