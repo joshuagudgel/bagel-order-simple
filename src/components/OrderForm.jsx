@@ -10,7 +10,6 @@ const OrderForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         const order = {
             customerName,
             timestamp: new Date().toISOString(),
@@ -20,9 +19,6 @@ const OrderForm = () => {
             spread,
             orderNotes
         };
-
-        console.log(order);
-
         try {
             const response = await fetch('http://localhost:5000/api/orders', {
               method: 'POST',
@@ -31,11 +27,9 @@ const OrderForm = () => {
               },
               body: JSON.stringify(order),
             });
-            
             if(!response.ok){
                 throw new Error('Failed to submit order');
             }
-
             setCustomerName('');
             setEggs(0);
             setCheese('none');

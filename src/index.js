@@ -24,7 +24,7 @@ mongoose.connection.once('open', () => {
 // Routes
 app.post('/api/orders', createOrder);
 app.get('/api/orders', getOrders);
-app.patch('/api/orders/:orderId', updateOrderStatus);
+app.patch('/api/orders/:orderNum', updateOrderStatus);
 
 // Start server
 app.listen(PORT, () => {

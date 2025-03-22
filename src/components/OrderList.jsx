@@ -20,27 +20,23 @@ const OrderList = () => {
         fetchOrders();
     }, []);
     
-    const markAsCompleted = async (orderId) => {
-        console.log("Complete button clicked for orderId:", orderId); // Debugging
+    const markAsCompleted = async (orderNum) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/orders/${orderId}`, {
+            const response = await fetch(`http://localhost:5000/api/orders/${orderNum}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ isComplete: true }),
             });
-    
             if (!response.ok) {
                 throw new Error('Failed to update order status');
             }
-    
             const updatedOrder = await response.json();
-            
             // Update the local state with the updated order
             setOrders((prevOrders) =>
                 prevOrders.map((order) =>
-                    order.orderId === updatedOrder.orderId ? updatedOrder : order
+                    order.orderNum === updatedOrder.orderNum ? updatedOrder : order
                 )
             );
         } catch (error) {
@@ -59,8 +55,8 @@ const OrderList = () => {
                     <p>No orders found.</p>
                 ) : (
                     submittedOrders.map((order) => (
-                        <li key={order.orderId}>
-                            <div>Order ID - {order.orderId}</div>
+                        <li key={order.orderNum}>
+                            <div>Order ID - {order.orderNum}</div>
                             <div>Name - {order.customerName}</div>
                             <div>Bagel - {order.bagel}</div>
                             <div>Spread - {order.spread}</div>
@@ -68,7 +64,7 @@ const OrderList = () => {
                             <div>Eggs - {order.eggs}</div>
                             <div>Time - {order.timestamp}</div>
                             <div>Additional Notes - {order.orderNotes}</div>
-                            <button onClick={() => markAsCompleted(order.orderId)}>Complete</button>
+                            <button onClick={() => markAsCompleted(order.orderNum)}>Complete</button>
                         </li>
                     ))
                 )}
@@ -81,8 +77,8 @@ const OrderList = () => {
                     <p>No completed orders found.</p>
                 ) : (
                     completedOrders.map((order) => (
-                        <li key={order.orderId}>
-                            <div>Order ID - {order.orderId}</div>
+                        <li key={order.orderNum}>
+                            <div>Order ID - {order.orderNum}</div>
                             <div>Name - {order.customerName}</div>
                             <div>Bagel - {order.bagel}</div>
                             <div>Spread - {order.spread}</div>

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const orderSchema = new mongoose.Schema({
-  orderId: { type: Number, required: true, unique: true },
+  orderNum: { type: Number, required: true, unique: true },
   customerName: { type: String, required: true },
   timestamp: { type: Date, default: Date.now },
   eggs: { type: Number, required: true },
