@@ -1,25 +1,50 @@
-import React from 'react'
-import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import OrderForm from './components/OrderForm';
 import OrderList from './components/OrderList';
-import './App.css'
+import Login from './components/Login';
+import Navbar from './components/Navbar';
+import { AuthProvider, ROLES } from './context/AuthContext';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import './App.css';
 
 const App = () => {
-
   return (
-    <Router>
-      <nav>
-        <ul>
-          <li><Link to="/order-form">Order Form</Link></li>
-          <li><Link to="/order-list">Orders</Link></li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path="/order-form" element={<OrderForm />} />
-        <Route path="/order-list" element={<OrderList />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <main className="container mx-auto p-4">
+          <Routes>
+            {/* Public route */}
+            <Route path="/login" element={<Login />} />
+            
+            {/* Protected routes */}
+            <Route 
+              path="/order-form" 
+              element={
+                <ProtectedRoute 
+                  element={<OrderForm />} 
+                  allowedRoles={[ROLES.CUSTOMER, ROLES.DEV]} 
+                />
+              } 
+            />
+            <Route 
+              path="/order-list" 
+              element={
+                <ProtectedRoute 
+                  element={<OrderList />} 
+                  allowedRoles={[ROLES.STAFF, ROLES.DEV]} 
+                />
+              } 
+            />
+            
+            {/* Redirect to login by default */}
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </main>
+      </Router>
+    </AuthProvider>
   );
-}
+};
 
 export default App;
