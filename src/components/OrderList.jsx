@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 const OrderList = () => {
     const [orders, setOrders] = useState([]);
+    const { authFetch } = useAuth();
 
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/orders');
+                const response = await authFetch('http://localhost:5000/api/orders');
                 if (!response.ok) {
                   throw new Error('Network response was not ok');
                 }
@@ -18,11 +20,11 @@ const OrderList = () => {
         };
         
         fetchOrders();
-    }, []);
+    }, [authFetch]);
     
     const markAsCompleted = async (orderNum) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/orders/${orderNum}`, {
+            const response = await authFetch(`http://localhost:5000/api/orders/${orderNum}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

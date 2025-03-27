@@ -1,49 +1,131 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, ROLES } from '../context/AuthContext';
 
 const Login = () => {
-  const { login } = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [role, setRole] = useState(ROLES.CUSTOMER);
+  const [error, setError] = useState('');
+  
+  const { login, register } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = (role) => {
-    login(role);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
     
-    // Redirect based on role
-    if (role === ROLES.CUSTOMER) {
-      navigate('/order-form');
-    } else if (role === ROLES.STAFF) {
-      navigate('/order-list');
-    } else if (role === ROLES.DEV) {
-      navigate('/order-form');
+    if (!username || !password) {
+      setError('Username and password are required');
+      return;
+    }
+    
+    try {
+      let result;
+      
+      if (isRegistering) {
+        result = await register(username, password, role);
+      } else {
+        result = await login(username, password);
+      }
+      
+      if (result.success) {
+        // Redirect based on role
+        if (role === ROLES.CUSTOMER) {
+          navigate('/order-form');
+        } else if (role === ROLES.STAFF) {
+          navigate('/order-list');
+        } else if (role === ROLES.DEV) {
+          navigate('/order-form');
+        }
+      } else {
+        setError(result.message || 'Authentication failed');
+      }
+    } catch (error) {
+      setError('An unexpected error occurred');
+      console.error(error);
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Bagel Shop Login</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          {isRegistering ? 'Register for Bagel Shop' : 'Bagel Shop Login'}
+        </h1>
         
-        <div className="space-y-4">
-          <button
-            onClick={() => handleLogin(ROLES.CUSTOMER)}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-          >
-            Login as Customer
-          </button>
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
+            <span>{error}</span>
+          </div>
+        )}
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="username" className="block text-gray-700 font-medium mb-1">
+              Username
+            </label>
+            <input
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter username"
+              required
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter password"
+              required
+            />
+          </div>
+          
+          {isRegistering && (
+            <div>
+              <label htmlFor="role" className="block text-gray-700 font-medium mb-1">
+                Role
+              </label>
+              <select
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="w-full border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value={ROLES.CUSTOMER}>Customer</option>
+                <option value={ROLES.STAFF}>Staff</option>
+                <option value={ROLES.DEV}>Developer</option>
+              </select>
+            </div>
+          )}
           
           <button
-            onClick={() => handleLogin(ROLES.STAFF)}
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors"
+            type="submit"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
           >
-            Login as Staff
+            {isRegistering ? 'Register' : 'Login'}
           </button>
-          
+        </form>
+        
+        <div className="mt-4 text-center">
           <button
-            onClick={() => handleLogin(ROLES.DEV)}
-            className="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-4 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors"
+            onClick={() => setIsRegistering(!isRegistering)}
+            className="text-blue-500 hover:text-blue-700 focus:outline-none"
           >
-            Login as Developer
+            {isRegistering 
+              ? 'Already have an account? Login' 
+              : 'Need an account? Register'}
           </button>
         </div>
       </div>
