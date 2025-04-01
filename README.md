@@ -1,4 +1,22 @@
-Project File Tree
+# Bagel Order Application
+
+A full-stack application for ordering and managing bagel orders with role-based access control.
+
+## Project Overview
+
+This application provides a streamlined bagel ordering system with different user roles:
+
+- **Customer users** can access the order form to submit bagel orders
+- **Staff users** can access the order queue to view and complete orders
+- **Dev users** have full access to both areas of the application
+
+### Technology Stack
+
+- **Frontend**: React 19, Vite, Tailwind CSS, JWT authentication
+- **Backend**: Express, MongoDB, JWT for secure API access
+- **Architecture**: RESTful API with role-based access control
+
+## Project File Tree
 📦 bagel-order-simple
 ┣ 📂 backend
 ┃ ┣ 📂 controllers
@@ -38,27 +56,25 @@ Project File Tree
 ┣ 📄 .gitignore               # Git ignore patterns
 ┗ 📄 README.md                # Project documentation
 
-Project Overview
-This is a bagel ordering application with role-based access control:
+## Development Setup
 
-Customer users can access the order form to submit bagel orders
-Staff users can access the order queue to view and complete orders
-Dev users have full access to both areas of the application
-The application is built with:
+### Prerequisites
 
-Frontend: React 19, Vite, Tailwind CSS, JWT authentication
-Backend: Express, MongoDB, JWT for secure API access
-Architecture: RESTful API with role-based access control
+- npm 10.9.2
+- node 22.14.0
+- vite 6.2.1
+- MongoDB 8.0.5
 
-Development Setup
-Install the following tools
-npm 10.9.2
-node 22.14.0
-vite 6.2.1
-MongoDB 8.0.5
-Pull code
+### Installation
+# Clone the repository
+git clone https://github.com/joshuagudgel/bagel-order-simple.git
+cd bagel-order-simple
+
+# Install frontend dependencies
 cd frontend
 npm install
+
+# Install backend dependencies
 cd backend
 npm install
 
@@ -71,4 +87,24 @@ node index.js
 cd frontend
 npm run dev
 
-Access the application at http://localhost:5173
+3. Access the application at http://localhost:5173
+
+User Authentication
+Registration
+You must register an account before logging in. The app supports three user roles:
+
+Customer: Can place bagel orders
+Staff: Can view and manage the order queue
+Dev: Has access to all features
+No default users exist - you must register a new account through the app.
+
+Deployment
+Render Deployment
+Create two services on Render:
+A Web Service for the backend
+A Static Site for the frontend
+Connect your GitHub repository
+Set appropriate build commands:
+Backend: npm install
+Frontend: npm install && npm run build
+Configure environment variables for MongoDB connection and JWT secret
