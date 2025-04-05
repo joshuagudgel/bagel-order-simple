@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 // Secret key for JWT - in production, use an environment variable
-const JWT_SECRET = 'your-secret-key'; // Better to use process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export const authenticateToken = (req, res, next) => {
   // Get the token from the Authorization header

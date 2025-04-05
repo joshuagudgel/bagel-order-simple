@@ -5,7 +5,9 @@ import cors from 'cors';
 import { createOrder, getOrders, updateOrderStatus } from './controllers/orderController.js';
 import { register, login } from './controllers/authController.js';
 import { authenticateToken, authorizeRole } from './middleware/auth.js';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -13,17 +15,18 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
-    ? 'https://your-frontend-url.com'
-    : 'http://localhost:5173', // Default Vite dev server port
+    ? 'https://bagel-order-simple.onrender.com'
+    : 'http://localhost:5173',
   credentials: true
 }));
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/order-app');
-
-mongoose.connection.once('open', () => {
-  console.log('Connected to MongoDB');
-});
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/order-app')
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1); // Exit process with failure
+  });
 
 // Public routes
 app.post('/api/auth/register', register);

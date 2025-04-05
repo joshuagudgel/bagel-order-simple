@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 // Secret key for JWT - in production, use an environment variable
-const JWT_SECRET = 'your-secret-key'; // Better to use process.env.JWT_SECRET in production
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const register = async (req, res) => {
   try {
