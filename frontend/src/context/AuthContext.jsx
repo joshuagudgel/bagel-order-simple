@@ -117,7 +117,7 @@ export const AuthProvider = ({ children }) => {
   };
   
   // Create a fetch function that automatically adds the auth token
-  const authFetch = async (url, options = {}) => {
+  const authFetch = async (endpoint, options = {}) => {
     // Clone the options to avoid modifying the original object
     const authOptions = { ...options };
     
@@ -131,8 +131,10 @@ export const AuthProvider = ({ children }) => {
       authOptions.headers.Authorization = `Bearer ${token}`;
     }
     
-    // Make the fetch request
+    // Make the fetch request with the full URL
     try {
+      // Ensure endpoint doesn't start with a slash if API_URL ends with one
+      const url = `${API_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
       const response = await fetch(url, authOptions);
       
       // Handle token expiration errors

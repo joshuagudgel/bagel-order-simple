@@ -8,7 +8,7 @@ const OrderList = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await authFetch('http://localhost:5000/api/orders');
+                const response = await authFetch('/api/orders');
                 if (!response.ok) {
                   throw new Error('Network response was not ok');
                 }
@@ -24,7 +24,7 @@ const OrderList = () => {
     
     const markAsCompleted = async (orderNum) => {
         try {
-            const response = await authFetch(`http://localhost:5000/api/orders/${orderNum}`, {
+            const response = await authFetch('/api/orders/${orderNum}', {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
