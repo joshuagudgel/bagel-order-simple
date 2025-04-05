@@ -24,7 +24,7 @@ const OrderList = () => {
     
     const markAsCompleted = async (orderNum) => {
         try {
-            const response = await authFetch('/api/orders/${orderNum}', {
+            const response = await authFetch(`/api/orders/${orderNum}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

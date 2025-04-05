@@ -23,7 +23,7 @@ const OrderForm = () => {
         };
         
         try {
-            const response = await authFetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
+            const response = await authFetch('/api/orders', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
