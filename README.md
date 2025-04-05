@@ -17,6 +17,8 @@ This application provides a streamlined bagel ordering system with different use
 - **Architecture**: RESTful API with role-based access control
 
 ## Project File Tree
+
+```text
 📦 bagel-order-simple
 ┣ 📂 backend
 ┃ ┣ 📂 controllers
@@ -55,6 +57,7 @@ This application provides a streamlined bagel ordering system with different use
 ┃
 ┣ 📄 .gitignore               # Git ignore patterns
 ┗ 📄 README.md                # Project documentation
+```
 
 ## Development Setup
 
@@ -66,26 +69,31 @@ This application provides a streamlined bagel ordering system with different use
 - MongoDB 8.0.5
 
 ### Installation
+
 # Clone the repository
+
 git clone https://github.com/joshuagudgel/bagel-order-simple.git
 cd bagel-order-simple
 
 # Install frontend dependencies
+
 cd frontend
 npm install
 
 # Install backend dependencies
+
 cd backend
 npm install
 
 Getting Started
+
 1. Start the backend:
-cd backend
-node index.js
+   cd backend
+   node index.js
 
 2. Start the frontend:
-cd frontend
-npm run dev
+   cd frontend
+   npm run dev
 
 3. Access the application at http://localhost:5173
 
