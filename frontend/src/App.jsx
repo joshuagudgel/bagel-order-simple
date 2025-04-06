@@ -10,7 +10,7 @@ import './App.css';
 
 // Loading component
 const LoadingScreen = () => (
-  <div className="flex justify-center items-center min-h-screen bg-blue-300">
+  <div className="flex justify-center items-center min-h-screen bg-blue-100">
     <div className="flex flex-col items-center">
       <div className="w-16 h-16 border-4 border-blue-600 border-t-blue-100 rounded-full animate-spin mb-4"></div>
       <p className="text-xl text-gray-600">Loading...</p>
@@ -27,7 +27,7 @@ const AppContent = () => {
   }
   
   return (
-    <div className="bg-blue-300 min-h-screen">
+    <div className="bg-blue-100 min-h-screen">
       <Router>
         <Navbar />
         <main className="container mx-auto p-4">
