@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, ROLES } from '../context/AuthContext';
-import bagelLogo from '../assets/images/bagel-logo.png';
+import bagelLogo16 from '../assets/images/bagel-logo-16.png';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -54,7 +54,7 @@ const Login = () => {
       <div className="flex flex-col items-center max-w-md w-full">
         <div className="mb-4 w-full flex justify-center">
             <img 
-              src={bagelLogo} 
+              src={bagelLogo16} 
               alt="Bagel Shop Logo" 
               className="w-32 h-32 object-contain" 
             />
@@ -63,13 +63,13 @@ const Login = () => {
           <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
             {isRegistering ? 'Register for Bagel Shop' : 'Bagel Shop'}
           </h1>
-          
+
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
               <span>{error}</span>
             </div>
           )}
-          
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="username" className="block text-gray-700 font-medium mb-1">
@@ -86,7 +86,7 @@ const Login = () => {
                 disabled={authLoading}
               />
             </div>
-            
+
             <div>
               <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
                 Password
@@ -102,7 +102,7 @@ const Login = () => {
                 disabled={authLoading}
               />
             </div>
-            
+
             {isRegistering && (
               <div>
                 <label htmlFor="role" className="block text-gray-700 font-medium mb-1">
@@ -121,7 +121,7 @@ const Login = () => {
                 </select>
               </div>
             )}
-            
+
             <button
               type="submit"
               className={`w-full font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
