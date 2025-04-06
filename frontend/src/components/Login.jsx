@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, ROLES } from '../context/AuthContext';
-import bagelLogo16 from '../assets/images/bagel-logo-16.png';
+import bagelLogoLarge from '../assets/images/bagel-logo-16.png';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -54,7 +54,7 @@ const Login = () => {
       <div className="flex flex-col items-center max-w-md w-full">
         <div className="mb-4 w-full flex justify-center">
             <img 
-              src={bagelLogo16} 
+              src={bagelLogoLarge} 
               alt="Bagel Shop Logo" 
               className="w-32 h-32 object-contain" 
             />
