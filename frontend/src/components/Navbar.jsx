@@ -1,4 +1,5 @@
 import React from 'react';
+import bagelLogo from '../assets/images/bagel-logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth, ROLES } from '../context/AuthContext';
 
@@ -16,7 +17,10 @@ const Navbar = () => {
   return (
     <nav className="bg-gray-800 text-white p-4">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
-        <div className="font-bold text-xl">Bagel Shop</div>
+        <div className="font-bold text-xl flex items-center">
+          <img src={bagelLogo} alt="Bagel Shop Logo" className="h-8 w-8 mr-2" />
+          Bagel Shop
+        </div>
         
         <ul className="flex space-x-6">
           {/* Customer and Dev can see Order Form */}
