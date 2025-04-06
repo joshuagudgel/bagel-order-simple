@@ -14,6 +14,8 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(false);
+  const [logoutLoading, setLogoutLoading] = useState(false);
   
   // Initialize user from localStorage on app load
   useEffect(() => {
@@ -50,6 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   // Login function
   const login = async (username, password) => {
+    setAuthLoading(true);
     try {
       const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
@@ -75,11 +78,14 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Login error:', error);
       return { success: false, message: error.message };
+    } finally {
+      setAuthLoading(false);
     }
   };
   
   // Register function
   const register = async (username, password, role) => {
+    setAuthLoading(true);
     try {
       const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
@@ -106,14 +112,21 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Registration error:', error);
       return { success: false, message: error.message };
+    } finally {
+      setAuthLoading(false);
     }
   };
 
   // Logout function
   const logout = () => {
-    setCurrentUser(null);
-    setToken(null);
-    localStorage.removeItem('token');
+    setLogoutLoading(true);
+    // Simulate a small delay for better UX
+    setTimeout(() => {
+      setCurrentUser(null);
+      setToken(null);
+      localStorage.removeItem('token');
+      setLogoutLoading(false);
+    }, 300);
   };
   
   // Create a fetch function that automatically adds the auth token
@@ -155,6 +168,8 @@ export const AuthProvider = ({ children }) => {
       currentUser, 
       token, 
       loading, 
+      authLoading,
+      logoutLoading,
       login, 
       register, 
       logout,

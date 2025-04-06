@@ -9,9 +9,12 @@ const OrderForm = () => {
     const [bagel, setBagel] = useState('plain');
     const [spread, setSpread] = useState('none');
     const [orderNotes, setOrderNotes] = useState('');
+    const [submitting, setSubmitting] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setSubmitting(true);
+        
         const order = {
             customerName,
             timestamp: new Date().toISOString(),
@@ -42,6 +45,8 @@ const OrderForm = () => {
             alert('Order submitted successfully!');
         } catch(error){
             alert("Error submitting order");
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -61,6 +66,7 @@ const OrderForm = () => {
                         placeholder="Enter your name"
                         className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 placeholder-gray-400"
                         required
+                        disabled={submitting}
                     />
                     <label className="block text-gray-700 font-bold mb-2 md:mb-0 md:text-right">
                         Bagel
@@ -70,6 +76,7 @@ const OrderForm = () => {
                         value={bagel}
                         onChange={(e) => setBagel(e.target.value)}
                         className=" border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                        disabled={submitting}
                     >
                         <option value="plain">Plain</option>
                         <option value="everything">Everything</option>
@@ -88,6 +95,7 @@ const OrderForm = () => {
                         value={eggs} 
                         onChange={(e) => setEggs(e.target.value)}
                         className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                        disabled={submitting}
                     >
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -102,6 +110,7 @@ const OrderForm = () => {
                         value={cheese}
                         onChange={(e) => setCheese(e.target.value)}
                         className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                        disabled={submitting}
                     >
                         <option value="none">None</option>
                         <option value="cheddar">Cheddar</option>
@@ -118,6 +127,7 @@ const OrderForm = () => {
                         value={spread}
                         onChange={(e) => setSpread(e.target.value)}
                         className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                        disabled={submitting}
                     >
                         <option value="none">None</option>
                         <option value="butter">Butter</option>
@@ -141,14 +151,27 @@ const OrderForm = () => {
                         onChange={(e) => setOrderNotes(e.target.value)}
                         placeholder="Special instructions (optional)"
                         className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 placeholder-gray-400"
+                        disabled={submitting}
                     />
                 </div>
                 <div className="flex items-center justify-center">
                     <button 
                         type="submit" 
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        className={`font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+                            submitting 
+                              ? 'bg-blue-300 cursor-not-allowed' 
+                              : 'bg-blue-500 hover:bg-blue-700 text-white'
+                          }`}
+                        disabled={submitting}
                     >
-                        Submit Order
+                        {submitting ? (
+                            <div className="flex items-center">
+                                <div className="w-5 h-5 border-4 border-blue-600 border-t-blue-100 rounded-full animate-spin mr-2"></div>
+                                <span>Submitting...</span>
+                            </div>
+                        ) : (
+                            'Submit Order'
+                        )}
                     </button>
                 </div>
             </form>

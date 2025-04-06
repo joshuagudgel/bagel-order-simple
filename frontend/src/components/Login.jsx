@@ -9,7 +9,7 @@ const Login = () => {
   const [role, setRole] = useState(ROLES.CUSTOMER);
   const [error, setError] = useState('');
   
-  const { login, register } = useAuth();
+  const { login, register, authLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -74,6 +74,7 @@ const Login = () => {
               className="w-full border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter username"
               required
+              disabled={authLoading}
             />
           </div>
           
@@ -89,6 +90,7 @@ const Login = () => {
               className="w-full border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter password"
               required
+              disabled={authLoading}
             />
           </div>
           
@@ -102,6 +104,7 @@ const Login = () => {
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 className="w-full border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                disabled={authLoading}
               >
                 <option value={ROLES.CUSTOMER}>Customer</option>
                 <option value={ROLES.STAFF}>Staff</option>
@@ -112,9 +115,21 @@ const Login = () => {
           
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+            className={`w-full font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
+              authLoading 
+                ? 'bg-blue-300 cursor-not-allowed'
+                : 'bg-blue-500 hover:bg-blue-600 text-white'
+            }`}
+            disabled={authLoading}
           >
-            {isRegistering ? 'Register' : 'Login'}
+            {authLoading ? (
+              <div className="flex justify-center items-center">
+                <div className="w-5 h-5 border-4 border-blue-600 border-t-blue-100 rounded-full animate-spin mr-2"></div>
+                {isRegistering ? 'Registering...' : 'Logging in...'}
+              </div>
+            ) : (
+              isRegistering ? 'Register' : 'Login'
+            )}
           </button>
         </form>
         
@@ -122,6 +137,7 @@ const Login = () => {
           <button
             onClick={() => setIsRegistering(!isRegistering)}
             className="text-blue-500 hover:text-blue-700 focus:outline-none"
+            disabled={authLoading}
           >
             {isRegistering 
               ? 'Already have an account? Login' 

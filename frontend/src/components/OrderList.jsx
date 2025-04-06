@@ -3,10 +3,13 @@ import { useAuth } from '../context/AuthContext';
 
 const OrderList = () => {
     const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [actionLoading, setActionLoading] = useState({});
     const { authFetch } = useAuth();
 
     useEffect(() => {
         const fetchOrders = async () => {
+            setLoading(true);
             try {
                 const response = await authFetch('/api/orders');
                 if (!response.ok) {
@@ -16,13 +19,21 @@ const OrderList = () => {
                 setOrders(data);
               } catch (error) {
                 console.error('Error fetching orders:', error);
+              } finally {
+                setLoading(false);
               }
         };
         
         fetchOrders();
+        
+        // Poll for updates every 30 seconds
+        const interval = setInterval(fetchOrders, 30000);
+        
+        return () => clearInterval(interval);
     }, [authFetch]);
     
     const markAsCompleted = async (orderNum) => {
+        setActionLoading(prev => ({ ...prev, [orderNum]: true }));
         try {
             const response = await authFetch(`/api/orders/${orderNum}`, {
                 method: 'PATCH',
@@ -43,14 +54,26 @@ const OrderList = () => {
             );
         } catch (error) {
             console.error('Error updating order status:', error);
+        } finally {
+            setActionLoading(prev => ({ ...prev, [orderNum]: false }));
         }
     };
     
     const submittedOrders = orders.filter(order => !order.isComplete);
     const completedOrders = orders.filter(order => order.isComplete);
     
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-64">
+                <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p className="text-gray-600">Loading orders...</p>
+                </div>
+            </div>
+        );
+    }
+    
     return (
-        
         <div className="flex flex-col items-center p-4 max-w-4xl mx-auto">
             <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Order Queue</h1>
             
@@ -82,9 +105,19 @@ const OrderList = () => {
                                 <div className="flex justify-end">
                                     <button 
                                         onClick={() => markAsCompleted(order.orderNum)}
-                                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-4 rounded border border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors"
+                                        className={`bg-green-500 text-white font-bold py-1 px-4 rounded border border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors ${
+                                          actionLoading[order.orderNum] ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-600'
+                                        }`}
+                                        disabled={actionLoading[order.orderNum]}
                                     >
-                                        Complete
+                                        {actionLoading[order.orderNum] ? (
+                                            <div className="flex items-center">
+                                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-1"></div>
+                                                <span>Processing...</span>
+                                            </div>
+                                        ) : (
+                                            'Complete'
+                                        )}
                                     </button>
                                 </div>
                             </div>

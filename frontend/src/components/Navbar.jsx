@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth, ROLES } from '../context/AuthContext';
 
 const Navbar = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, logoutLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -40,9 +40,17 @@ const Navbar = () => {
           <li>
             <button 
               onClick={handleLogout}
-              className="text-red-300 hover:text-red-100 transition-colors"
+              className={`text-red-300 hover:text-red-100 transition-colors ${logoutLoading ? 'cursor-not-allowed opacity-50' : ''}`}
+              disabled={logoutLoading}
             >
-              Logout
+              {logoutLoading ? (
+                <span className="flex items-center">
+                  <div className="w-4 h-4 border-2 border-red-100 border-t-transparent rounded-full animate-spin mr-2"></div>
+                  Logging out...
+                </span>
+              ) : (
+                'Logout'
+              )}
             </button>
           </li>
         </ul>

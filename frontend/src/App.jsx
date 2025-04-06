@@ -4,45 +4,68 @@ import OrderForm from './components/OrderForm';
 import OrderList from './components/OrderList';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
-import { AuthProvider, ROLES } from './context/AuthContext';
+import { AuthProvider, useAuth, ROLES } from './context/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import './App.css';
+
+// Loading component
+const LoadingScreen = () => (
+  <div className="flex justify-center items-center min-h-screen bg-gray-50">
+    <div className="flex flex-col items-center">
+      <div className="w-16 h-16 border-4 border-blue-600 border-t-blue-100 rounded-full animate-spin mb-4"></div>
+      <p className="text-xl text-gray-600">Loading...</p>
+    </div>
+  </div>
+);
+
+// Wrapper component that handles authentication loading
+const AppContent = () => {
+  const { loading } = useAuth();
+  
+  if (loading) {
+    return <LoadingScreen />;
+  }
+  
+  return (
+    <Router>
+      <Navbar />
+      <main className="container mx-auto p-4">
+        <Routes>
+          {/* Public route */}
+          <Route path="/login" element={<Login />} />
+          
+          {/* Protected routes */}
+          <Route 
+            path="/order-form" 
+            element={
+              <ProtectedRoute 
+                element={<OrderForm />} 
+                allowedRoles={[ROLES.CUSTOMER, ROLES.DEV]} 
+              />
+            } 
+          />
+          <Route 
+            path="/order-list" 
+            element={
+              <ProtectedRoute 
+                element={<OrderList />} 
+                allowedRoles={[ROLES.STAFF, ROLES.DEV]} 
+              />
+            } 
+          />
+          
+          {/* Redirect to login by default */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </main>
+    </Router>
+  );
+};
 
 const App = () => {
   return (
     <AuthProvider>
-      <Router>
-        <Navbar />
-        <main className="container mx-auto p-4">
-          <Routes>
-            {/* Public route */}
-            <Route path="/login" element={<Login />} />
-            
-            {/* Protected routes */}
-            <Route 
-              path="/order-form" 
-              element={
-                <ProtectedRoute 
-                  element={<OrderForm />} 
-                  allowedRoles={[ROLES.CUSTOMER, ROLES.DEV]} 
-                />
-              } 
-            />
-            <Route 
-              path="/order-list" 
-              element={
-                <ProtectedRoute 
-                  element={<OrderList />} 
-                  allowedRoles={[ROLES.STAFF, ROLES.DEV]} 
-                />
-              } 
-            />
-            
-            {/* Redirect to login by default */}
-            <Route path="*" element={<Navigate to="/login" replace />} />
-          </Routes>
-        </main>
-      </Router>
+      <AppContent />
     </AuthProvider>
   );
 };
