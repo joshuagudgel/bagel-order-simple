@@ -53,7 +53,7 @@ const OrderForm = () => {
     return (
         <div className="flex justify-center items-center p-4">
             <form onSubmit={handleSubmit} className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Bagel Order Form</h2>    
+            <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Bagel Order</h2>    
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-4 mb-4">
                     <label className="block text-gray-700 font-bold mb-2 md:mb-0 md:text-right">
                         Name
