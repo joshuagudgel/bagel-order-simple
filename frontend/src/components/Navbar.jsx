@@ -15,7 +15,7 @@ const Navbar = () => {
   if (!currentUser) return null;
 
   return (
-    <nav className="bg-gray-500 text-white p-4">
+    <nav className="bg-blue-500 text-white p-4">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         <div className="font-bold text-xl flex items-center">
           <img src={bagelLogo} alt="Bagel Shop Logo" className="h-8 w-8 mr-2" />
