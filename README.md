@@ -59,55 +59,19 @@ This application provides a streamlined bagel ordering system with different use
 ┗ 📄 README.md                # Project documentation
 ```
 
-## Development Setup
+Access the application at https://bagel-order-simple.onrender.com
+Render's free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+The page is responsive once you are signed in.
 
-### Prerequisites
-
-- npm 10.9.2
-- node 22.14.0
-- vite 6.2.1
-- MongoDB 8.0.5
-
-### Installation
-
-# Clone the repository
-
-git clone https://github.com/joshuagudgel/bagel-order-simple.git
-cd bagel-order-simple
-
-# Install frontend dependencies
-
-cd frontend
-npm install
-
-# Install backend dependencies
-
-cd backend
-npm install
-
-Getting Started
-
-1. Start the backend:
-   cd backend
-   node index.js
-
-2. Start the frontend:
-   cd frontend
-   npm run dev
-
-3. Access the application at http://localhost:5173
-
-User Authentication
 Registration
-You must register an account before logging in. The app supports three user roles:
 
+Register an account before logging in. The app supports three user roles:
 Customer: Can place bagel orders
 Staff: Can view and manage the order queue
 Dev: Has access to all features
-No default users exist - you must register a new account through the app.
 
-Deployment
 Render Deployment
+
 Create two services on Render:
 A Web Service for the backend
 A Static Site for the frontend
