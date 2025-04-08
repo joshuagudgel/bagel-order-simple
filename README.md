@@ -60,6 +60,7 @@ This application provides a streamlined bagel ordering system with different use
 ```
 
 Access the application at https://bagel-order-simple.onrender.com
+
 Render's free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
 The page is responsive once you are signed in.
 
@@ -74,10 +75,7 @@ The app supports three user roles:
 Render Deployment
 
 Create two services on Render:
-A Web Service for the backend
-A Static Site for the frontend
-Connect your GitHub repository
-Set appropriate build commands:
-Backend: npm install
-Frontend: npm install && npm run build
-Configure environment variables for MongoDB connection and JWT secret
+-  Web Service for the backend
+-  Static Site for the frontend
+
+Configure build commands, start command for the backend, environment variables for MongoDB connection and JWT secret
