@@ -65,10 +65,11 @@ The page is responsive once you are signed in.
 
 Registration
 
-Register an account before logging in. The app supports three user roles:
-Customer: Can place bagel orders
-Staff: Can view and manage the order queue
-Dev: Has access to all features
+Register an account before logging in. 
+The app supports three user roles:
+-  Customer: Can place bagel orders
+-  Staff: Can view and manage the order queue
+-  Dev: Has access to all features
 
 Render Deployment
 
