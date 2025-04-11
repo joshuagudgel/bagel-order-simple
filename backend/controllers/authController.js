@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 
 // Secret key for JWT - in production, use an environment variable
 const JWT_SECRET = process.env.JWT_SECRET;
