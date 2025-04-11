@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
   createdAt: { 
     type: Date, 
     default: Date.now 
+  },
+  passwordMigrated: { 
+    type: Boolean, 
+    default: false 
   }
 });
 

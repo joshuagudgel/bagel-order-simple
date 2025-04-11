@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import bcrypt from 'bcryptjs';
 
 // Secret key for JWT - in production, use an environment variable
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -14,10 +15,13 @@ export const register = async (req, res) => {
       return res.status(400).json({ message: 'Username already exists' });
     }
 
+    // Hash the password with 10 rounds of salting
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // Create new user - in a real app, you would hash the password
     const newUser = new User({
       username,
-      password, // In production, hash this: await bcrypt.hash(password, 10)
+      password: hashedPassword,
       role
     });
 
@@ -54,9 +58,24 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Check password - in a real app, you would compare hashed passwords
-    if (password !== user.password) { // In production: await bcrypt.compare(password, user.password)
-      return res.status(401).json({ message: 'Invalid credentials' });
+    // Inside login function, after finding the user
+    if (!user.passwordMigrated) {
+      // For non-migrated users, compare directly
+      if (password !== user.password) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+      }
+      
+      // If correct, update to hashed password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.password = hashedPassword;
+      user.passwordMigrated = true;
+      await user.save();
+    } else {
+      // For migrated users, use bcrypt comparison
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+      }
     }
 
     // Generate token
