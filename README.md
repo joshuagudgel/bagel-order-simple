@@ -48,8 +48,6 @@ This application provides a streamlined bagel ordering system with different use
 ┃ ┃ ┣ 📄 App.jsx             # Main React component
 ┃ ┃ ┣ 📄 index.css           # Global styles with Tailwind directives
 ┃ ┃ ┗ 📄 main.jsx            # React entry point
-┃ ┣ 📄 .env.development       # Development environment variables
-┃ ┣ 📄 .env.production        # Production environment variables
 ┃ ┣ 📄 eslint.config.js       # ESLint configuration
 ┃ ┣ 📄 index.html             # HTML entry point
 ┃ ┣ 📄 package.json           # Frontend dependencies
@@ -66,16 +64,18 @@ The page is responsive once you are signed in.
 
 Registration
 
-Register an account before logging in. 
+Register an account before logging in.
 The app supports three user roles:
--  Customer: Can place bagel orders
--  Staff: Can view and manage the order queue
--  Dev: Has access to all features
+
+- Customer: Can place bagel orders
+- Staff: Can view and manage the order queue
+- Dev: Has access to all features
 
 Render Deployment
 
 Create two services on Render:
--  Web Service for the backend
--  Static Site for the frontend
+
+- Web Service for the backend
+- Static Site for the frontend
 
 Configure build commands, start command for the backend, environment variables for MongoDB connection and JWT secret
